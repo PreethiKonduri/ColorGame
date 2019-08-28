@@ -46,46 +46,34 @@ class _MyShapeState extends State<MyShape> {
     Colors.red
   ];
   int seconds = 20;
-  Timer timer;
+  Timer mainTimer;
   var value = "";
-  var temp;
+  var resetStatus = true;
 
   updateTime(bool flag) {
     Timer.periodic(Duration(seconds: 1), (Timer timer) {
+      mainTimer = timer;
       setState(() {
-        if (seconds == 30) {
-          seconds = 20;
+        if (seconds == 0) {
           timer.cancel();
-        } else {
-          if (seconds == 0) {
-            timer.cancel();
-            if (color1 == color2 &&
-                color1 == color3 &&
-                color1 == color4 &&
-                color1 == color5 &&
-                color1 == color6 &&
-                color1 == color7) {
-              value = "Success";
-            } else {
-              value = "U Lost, Try again..!";
-            }
+          if (color1 == color2 &&
+              color1 == color3 &&
+              color1 == color4 &&
+              color1 == color5 &&
+              color1 == color6 &&
+              color1 == color7) {
+            value = "Success";
+            resetStatus = false;
           } else {
-            seconds = seconds - 1;
+            value = "U Lost, Try again..!";
+            resetStatus = false;
           }
+        } else {
+          seconds = seconds - 1;
         }
       });
     });
   }
-
-  @override
-  void dispose() {
-    timer.cancel();
-    super.dispose();
-  } //  stopTimer() {
-//    setState(() {
-//      timer.cancel();
-//    });
-//  }
 
   @override
   Widget build(BuildContext context) {
@@ -94,203 +82,23 @@ class _MyShapeState extends State<MyShape> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-//            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                height: 40.0,
-                margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
-                child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      "Time Left over: $seconds",
-                      textAlign: TextAlign.center,
-                    )),
-                decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    border: new Border.all(color: Colors.black)),
-                padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    seconds = 20;
-                    updateTime(true);
-                  });
-                },
-                child: Container(
-                  height: 30.0,
-                  width: 30.0,
-//                  margin: EdgeInsets.fromLTRB(20, 50, 20, 20),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: Colors.yellow,
-                  ),
-                ),
-              ),
-              GestureDetector(
-                onTap: () {
-                  setState(() {
-                    // updateTime(flag: false);
-//                    timer.cancel();
+          MainPanel(),
+          RowOne(),
+          RowTwo(),
+          RowThree()
+        ],
+      ),
+    );
+  }
 
-                    seconds = 30;
-                    updateTime(true);
-                    color1 = Colors.orange;
-                    color2 = Colors.pink;
-                    color3 = Colors.lightBlue;
-                    color4 = Colors.brown;
-                    color5 = Colors.green;
-                    color6 = Colors.deepPurple;
-                    color7 = Colors.red;
-                    value = "";
-                  });
-                },
-                child: Container(
-                  height: 30.0,
-                  width: 30.0,
-//                  margin: EdgeInsets.fromLTRB(20, 50, 20, 20),
-                  decoration: BoxDecoration(
-                    shape: BoxShape.rectangle,
-                    color: Colors.red,
-                  ),
-                ),
-              )
-            ],
-          ),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      //  color1 = Colors.pink;
-                      if (seconds != 20) {
-                        value = "";
-                        Random _random = new Random();
-                        color1 = colorList[_random.nextInt(colorList.length)];
-                        if (color1 == color2 &&
-                            color1 == color3 &&
-                            color1 == color4 &&
-                            color1 == color5 &&
-                            color1 == color6 &&
-                            color1 == color7) {
-                          value = "Success";
-                          updateTime(false);
-                          print("Success");
-                        }
-                      } else {
-                        value = "Start Timer, to start the game";
-                      }
-                      // color1 = Colors.pink;
-                    });
-                  },
-                  child: Container(
-                    color: color1,
-                    height: 200.0,
-                    width: 100.0,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      if (seconds != 20) {
-                        value = "";
-                        Random _random = new Random();
-                        color2 = colorList[_random.nextInt(colorList.length)];
-                        if (color1 == color2 &&
-                            color1 == color3 &&
-                            color1 == color4 &&
-                            color1 == color5 &&
-                            color1 == color6 &&
-                            color1 == color7) {
-                          value = "Success";
-                          updateTime(false);
-                          print("Success");
-                        }
-                      } else {
-                        value = "Start Timer, to start the game";
-                      }
-                    });
-                  },
-                  child: Container(
-                    color: color2,
-                    height: 200.0,
-                    width: 100.0,
-                  ),
-                ),
-              ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
-                      if (seconds != 20) {
-                        value = "";
-                        Random _random = new Random();
-                        color3 = colorList[_random.nextInt(colorList.length)];
-                        if (color1 == color2 &&
-                            color1 == color3 &&
-                            color1 == color4 &&
-                            color1 == color5 &&
-                            color1 == color6 &&
-                            color1 == color7) {
-                          value = "Success";
-                          updateTime(false);
-                          print("Success");
-                        }
-                      } else {
-                        value = "Start Timer, to start the game";
-                      }
-                    });
-                  },
-                  child: Container(
-                    color: color3,
-                    height: 200.0,
-                    width: 100.0,
-                  ),
-                ),
-              )
-            ],
-          ),
-          Expanded(
+  Row RowThree() {
+    return Row(
+          children: <Widget>[
+            Expanded(
               child: GestureDetector(
-            onTap: () {
-              setState(() {
-                if (seconds != 20) {
-                  value = "";
-                  Random _random = new Random();
-                  color4 = colorList[_random.nextInt(colorList.length)];
-                  if (color1 == color2 &&
-                      color1 == color3 &&
-                      color1 == color4 &&
-                      color1 == color5 &&
-                      color1 == color6 &&
-                      color1 == color7) {
-                    value = "Success";
-                    updateTime(false);
-                    print("Success");
-                  }
-                } else {
-                  value = "Start Timer, to start the game";
-                }
-              });
-            },
-            child: Container(
-              color: color4,
-              height: 200.0,
-              width: 100.0,
-              child: Text("$value"),
-            ),
-          )),
-          Row(
-            children: <Widget>[
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
+                onTap: () {
+                  setState(() {
+                    if (resetStatus) {
                       if (seconds != 20) {
                         value = "";
                         Random _random = new Random();
@@ -302,25 +110,31 @@ class _MyShapeState extends State<MyShape> {
                             color1 == color6 &&
                             color1 == color7) {
                           value = "Success";
-                          updateTime(false);
+                          mainTimer.cancel();
+                          resetStatus = false;
                           print("Success");
                         }
                       } else {
                         value = "Start Timer, to start the game";
                       }
-                    });
-                  },
-                  child: Container(
-                    color: color5,
-                    height: 200.0,
-                    width: 100.0,
-                  ),
+                    } else {
+                      value =
+                          "Reset Timer and click on Timer to start the game";
+                    }
+                  });
+                },
+                child: Container(
+                  color: color5,
+                  height: 200.0,
+                  width: 100.0,
                 ),
               ),
-              Expanded(
-                child: GestureDetector(
-                  onTap: () {
-                    setState(() {
+            ),
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if (resetStatus) {
                       if (seconds != 20) {
                         value = "";
                         Random _random = new Random();
@@ -332,25 +146,31 @@ class _MyShapeState extends State<MyShape> {
                             color1 == color6 &&
                             color1 == color7) {
                           value = "Success";
-                          updateTime(false);
+                          mainTimer.cancel();
+                          resetStatus = false;
                           print("Success");
                         }
                       } else {
                         value = "Start Timer, to start the game";
                       }
-                    });
-                  },
-                  child: Container(
-                    color: color6,
-                    height: 200.0,
-                    width: 100.0,
-                  ),
+                    } else {
+                      value =
+                          "Reset Timer and click on Timer to start the game";
+                    }
+                  });
+                },
+                child: Container(
+                  color: color6,
+                  height: 200.0,
+                  width: 100.0,
                 ),
               ),
-              Expanded(
-                  child: GestureDetector(
-                onTap: () {
-                  setState(() {
+            ),
+            Expanded(
+                child: GestureDetector(
+              onTap: () {
+                setState(() {
+                  if (resetStatus) {
                     if (seconds != 20) {
                       value = "";
                       Random _random = new Random();
@@ -362,24 +182,259 @@ class _MyShapeState extends State<MyShape> {
                           color1 == color6 &&
                           color1 == color7) {
                         value = "Success";
-                        updateTime(false);
+                        mainTimer.cancel();
+                        resetStatus = false;
                         print("Success");
                       }
                     } else {
                       value = "Start Timer, to start the game";
                     }
+                  } else {
+                    value =
+                        "Reset Timer and click on Timer to start the game";
+                  }
+                });
+              },
+              child: Container(
+                color: color7,
+                height: 200.0,
+                width: 100.0,
+              ),
+            ))
+          ],
+        );
+  }
+
+  Expanded RowTwo() {
+    return Expanded(
+            child: GestureDetector(
+          onTap: () {
+            setState(() {
+              if (resetStatus) {
+                if (seconds != 20) {
+                  value = "";
+                  Random _random = new Random();
+                  color4 = colorList[_random.nextInt(colorList.length)];
+                  if (color1 == color2 &&
+                      color1 == color3 &&
+                      color1 == color4 &&
+                      color1 == color5 &&
+                      color1 == color6 &&
+                      color1 == color7) {
+                    value = "Success";
+                    mainTimer.cancel();
+                    resetStatus = false;
+                    print("Success");
+                  }
+                } else {
+                  value = "Start Timer, to start the game";
+                }
+              } else {
+                value = "Reset Timer and click on Timer to start the game";
+              }
+            });
+          },
+          child: Container(
+            color: color4,
+            height: 200.0,
+            width: 100.0,
+            alignment: Alignment.center,
+            child: Text(
+              "$value",
+              style: TextStyle(color: Colors.white),
+            ),
+          ),
+        ));
+  }
+
+  Row RowOne() {
+    return Row(
+          children: <Widget>[
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    //  color1 = Colors.pink;
+                    if (resetStatus) {
+                      if (seconds != 20) {
+                        value = "";
+                        Random _random = new Random();
+                        color1 = colorList[_random.nextInt(colorList.length)];
+                        if (color1 == color2 &&
+                            color1 == color3 &&
+                            color1 == color4 &&
+                            color1 == color5 &&
+                            color1 == color6 &&
+                            color1 == color7) {
+                          value = "Success";
+                          mainTimer.cancel();
+                          resetStatus = false;
+                          print("Success");
+                        }
+                      } else {
+                        value = "Start Timer, to start the game";
+                      }
+                    } else {
+                      value =
+                          "Reset Timer and click on Timer to start the game";
+                    }
+                    // color1 = Colors.pink;
                   });
                 },
                 child: Container(
-                  color: color7,
+                  color: color1,
                   height: 200.0,
                   width: 100.0,
                 ),
-              ))
-            ],
-          )
-        ],
-      ),
-    );
+              ),
+            ),
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if (resetStatus) {
+                      if (seconds != 20) {
+                        value = "";
+                        Random _random = new Random();
+                        color2 = colorList[_random.nextInt(colorList.length)];
+                        if (color1 == color2 &&
+                            color1 == color3 &&
+                            color1 == color4 &&
+                            color1 == color5 &&
+                            color1 == color6 &&
+                            color1 == color7) {
+                          value = "Success";
+                          mainTimer.cancel();
+                          resetStatus = false;
+                          print("Success");
+                        }
+                      } else {
+                        value = "Start Timer, to start the game";
+                      }
+                    } else {
+                      value =
+                          "Reset Timer and click on Timer to start the game";
+                    }
+                  });
+                },
+                child: Container(
+                  color: color2,
+                  height: 200.0,
+                  width: 100.0,
+                ),
+              ),
+            ),
+            Expanded(
+              child: GestureDetector(
+                onTap: () {
+                  setState(() {
+                    if (resetStatus) {
+                      if (seconds != 20) {
+                        value = "";
+                        Random _random = new Random();
+                        color3 = colorList[_random.nextInt(colorList.length)];
+                        if (color1 == color2 &&
+                            color1 == color3 &&
+                            color1 == color4 &&
+                            color1 == color5 &&
+                            color1 == color6 &&
+                            color1 == color7) {
+                          value = "Success";
+                          mainTimer.cancel();
+                          resetStatus = false;
+                          print("Success");
+                        }
+                      } else {
+                        value = "Start Timer, to start the game";
+                      }
+                    } else {
+                      value =
+                          "Reset Timer and click on Timer to start the game";
+                    }
+                  });
+                },
+                child: Container(
+                  color: color3,
+                  height: 200.0,
+                  width: 100.0,
+                ),
+              ),
+            )
+          ],
+        );
+  }
+
+  Row MainPanel() {
+    return Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+//            crossAxisAlignment: CrossAxisAlignment.center,
+          children: <Widget>[
+            Container(
+              height: 40.0,
+              margin: EdgeInsets.fromLTRB(0, 10, 0, 10),
+              child: Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    "Time Left over: $seconds",
+                    textAlign: TextAlign.center,
+                  )),
+              decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  border: new Border.all(color: Colors.black)),
+              padding: EdgeInsets.fromLTRB(5, 0, 5, 0),
+            ),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  seconds = 20;
+                  updateTime(true);
+                });
+              },
+              child: Container(
+                height: 30.0,
+                width: 30.0,
+//                  margin: EdgeInsets.fromLTRB(20, 50, 20, 20),
+                decoration: BoxDecoration(
+                  shape: BoxShape.circle,
+                  color: Colors.yellow,
+                ),
+              ),
+            ),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  // updateTime(flag: false);
+//                    timer.cancel();
+                  if (mainTimer != null) {
+                    mainTimer.cancel();
+                    seconds = 20;
+                  } else {
+                    seconds = 20;
+                  }
+                  resetStatus = true;
+//                    seconds = 30;
+//                    updateTime(true);
+                  color1 = Colors.orange;
+                  color2 = Colors.pink;
+                  color3 = Colors.lightBlue;
+                  color4 = Colors.brown;
+                  color5 = Colors.green;
+                  color6 = Colors.deepPurple;
+                  color7 = Colors.red;
+                  value = "";
+                });
+              },
+              child: Container(
+                height: 30.0,
+                width: 30.0,
+//                  margin: EdgeInsets.fromLTRB(20, 50, 20, 20),
+                decoration: BoxDecoration(
+                  shape: BoxShape.rectangle,
+                  color: Colors.red,
+                ),
+              ),
+            )
+          ],
+        );
   }
 }
