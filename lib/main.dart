@@ -86,12 +86,12 @@ class _MyShapeState extends State<MyShape> {
     return Container(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
-        children: <Widget>[mainPanel(), setOne(), setTwo(), setThree()],
+        children: <Widget>[_mainPanel(), _setOne(), _setTwo(), _setThree()],
       ),
     );
   }
 
-  Row setThree() {
+  _setThree() {
     return Row(
       children: <Widget>[
         Expanded(
@@ -201,7 +201,7 @@ class _MyShapeState extends State<MyShape> {
     );
   }
 
-  Expanded setTwo() {
+  _setTwo() {
     return Expanded(
         child: GestureDetector(
       onTap: () {
@@ -242,7 +242,7 @@ class _MyShapeState extends State<MyShape> {
     ));
   }
 
-  Row setOne() {
+  _setOne() {
     return Row(
       children: <Widget>[
         Expanded(
@@ -355,7 +355,7 @@ class _MyShapeState extends State<MyShape> {
     );
   }
 
-  Row mainPanel() {
+  _mainPanel() {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
 //            crossAxisAlignment: CrossAxisAlignment.center,
