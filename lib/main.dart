@@ -4,23 +4,15 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 
 main() {
-  // entry point to dart
   runApp(MaterialApp(
-
-      // entry point to flutter ; starting with a Material app or a Cupertino app
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           centerTitle: true,
           title: Text("Game On"),
         ),
-        // scaffold is for android , scaffold is a frame structure that can hold widgets
-
         body: MyShape(),
       )));
-  /*
-  Scaffold always require a body
-   */
 }
 
 class MyShape extends StatefulWidget {
@@ -50,7 +42,7 @@ class _MyShapeState extends State<MyShape> {
   var value = "";
   var resetStatus = true;
 
-  updateTime(bool flag) {
+  _updateTime(bool flag) {
     Timer.periodic(Duration(seconds: 1), (Timer timer) {
       mainTimer = timer;
       setState(() {
@@ -75,9 +67,9 @@ class _MyShapeState extends State<MyShape> {
     });
   }
 
-  getRandomColor() {
+  _getRandomColor() {
     Random _random = new Random();
-    return colorList[_random.nextInt(colorList.length)];
+    return _random.nextInt(colorList.length);
   }
 
   @override
@@ -101,7 +93,7 @@ class _MyShapeState extends State<MyShape> {
                 if (resetStatus) {
                   if (seconds != 20) {
                     value = "";
-                    color5 = colorList[getRandomColor()];
+                    color5 = colorList[_getRandomColor()];
                     if (color1 == color2 &&
                         color1 == color3 &&
                         color1 == color4 &&
@@ -136,7 +128,7 @@ class _MyShapeState extends State<MyShape> {
                   if (seconds != 20) {
                     value = "";
 
-                    color6 = colorList[getRandomColor()];
+                    color6 = colorList[_getRandomColor()];
                     if (color1 == color2 &&
                         color1 == color3 &&
                         color1 == color4 &&
@@ -171,7 +163,7 @@ class _MyShapeState extends State<MyShape> {
                 if (seconds != 20) {
                   value = "";
 
-                  color7 = colorList[getRandomColor()];
+                  color7 = colorList[_getRandomColor()];
                   if (color1 == color2 &&
                       color1 == color3 &&
                       color1 == color4 &&
@@ -209,7 +201,7 @@ class _MyShapeState extends State<MyShape> {
           if (resetStatus) {
             if (seconds != 20) {
               value = "";
-              color4 = colorList[getRandomColor()];
+              color4 = colorList[_getRandomColor()];
               if (color1 == color2 &&
                   color1 == color3 &&
                   color1 == color4 &&
@@ -254,7 +246,7 @@ class _MyShapeState extends State<MyShape> {
                   if (seconds != 20) {
                     value = "";
 
-                    color1 = colorList[getRandomColor()];
+                    color1 = colorList[_getRandomColor()];
                     if (color1 == color2 &&
                         color1 == color3 &&
                         color1 == color4 &&
@@ -290,7 +282,7 @@ class _MyShapeState extends State<MyShape> {
                   if (seconds != 20) {
                     value = "";
 
-                    color2 = colorList[getRandomColor()];
+                    color2 = colorList[_getRandomColor()];
                     if (color1 == color2 &&
                         color1 == color3 &&
                         color1 == color4 &&
@@ -324,7 +316,7 @@ class _MyShapeState extends State<MyShape> {
                 if (resetStatus) {
                   if (seconds != 20) {
                     value = "";
-                    color3 = colorList[getRandomColor()];
+                    color3 = colorList[_getRandomColor()];
                     if (color1 == color2 &&
                         color1 == color3 &&
                         color1 == color4 &&
@@ -379,13 +371,12 @@ class _MyShapeState extends State<MyShape> {
             setState(() {
               seconds = 20;
               value = "";
-              updateTime(true);
+              _updateTime(true);
             });
           },
           child: Container(
             height: 30.0,
             width: 30.0,
-//                  margin: EdgeInsets.fromLTRB(20, 50, 20, 20),
             decoration: BoxDecoration(
               shape: BoxShape.circle,
               color: Colors.yellow,
@@ -395,8 +386,6 @@ class _MyShapeState extends State<MyShape> {
         GestureDetector(
           onTap: () {
             setState(() {
-              // updateTime(flag: false);
-//                    timer.cancel();
               if (mainTimer != null) {
                 mainTimer.cancel();
                 seconds = 20;
@@ -419,7 +408,6 @@ class _MyShapeState extends State<MyShape> {
           child: Container(
             height: 30.0,
             width: 30.0,
-//                  margin: EdgeInsets.fromLTRB(20, 50, 20, 20),
             decoration: BoxDecoration(
               shape: BoxShape.rectangle,
               color: Colors.red,
